@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gacha - Projeto Copa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-copa">
+        <div class="container">
+            <div class="navbar-inner w-100">
+                <a class="navbar-brand" th:href="@{/home}">Projeto Copa</a>
+                <div class="nav-tabs-copa">
+                    <a class="nav-link-copa" th:href="@{/home}">Home</a>
+                    <a class="nav-link-copa active" th:href="@{/gacha}">Gacha</a>
+                    <a class="nav-link-copa" th:href="@{/inventario}">Inventário</a>
+                </div>
+                <div class="navbar-right">
+                    <span class="badge-gemas" th:if="${gemas != null}" th:text="${gemas} + ' gemas'">0 gemas</span>
+                    <span class="text-muted-copa d-none d-md-inline" style="font-size:0.8rem;" th:if="${nomeUsuario != null}" th:text="'Olá, ' + ${nomeUsuario}"></span>
+                    <a class="btn btn-copa btn-sm" th:href="@{/logout}">Sair</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <div th:if="${erro}" class="alert alert-copa-erro" th:text="${erro}"></div>
+        <div th:if="${sucesso}" class="alert alert-copa-sucesso" th:text="${sucesso}"></div>
+
+        <div class="copa-card p-4 p-md-5 text-center mx-auto" style="max-width: 480px;">
+            <div class="icone-pacote">📦</div>
+            <p class="title-gold mb-2">Pack Opening</p>
+            <h2 class="title-champ h4 mb-2">Pacote de Cartas</h2>
+            <p class="text-muted-copa mb-1">Abra um pacote e receba 5 jogadores da Copa 2026.</p>
+            <p class="text-muted-copa small mb-3">
+                60% Comum · 25% Incomum · 10% Raro · 4,5% Épico · 0,5% Lendário
+            </p>
+            <p class="text-gold fs-5 mb-4" th:text="'Custo: ' + ${custoPacote} + ' gemas'">Custo: 200 gemas</p>
+
+            <form method="post" th:action="@{/gacha/comprar}">
+                <button class="btn btn-copa btn-copa-gold px-4 py-2"
+                        type="submit"
+                        th:disabled="${gemas < custoPacote}"
+                        th:text="${gemas >= custoPacote} ? 'Abrir pacote' : 'Gemas insuficientes'">
+                    Abrir pacote
+                </button>
+            </form>
+        </div>
+
+        <div class="mt-5" th:if="${jogadoresObtidos != null and !jogadoresObtidos.isEmpty()}">
+            <p class="title-gold text-center mb-2">Resultado</p>
+            <h3 class="title-champ text-center h4 mb-4">Jogadores obtidos</h3>
+            <div class="cartas-grid">
+                <div class="carta-jogador"
+                     th:each="j : ${jogadoresObtidos}"
+                     th:classappend="${j.raridadeJogadores}">
+                    <div class="carta-img">
+                        <span th:if="${j.imgJogadores == null or #strings.isEmpty(j.imgJogadores)}">Sem imagem</span>
+                        <img th:if="${j.imgJogadores != null and !#strings.isEmpty(j.imgJogadores)}"
+                             th:src="@{${j.imgJogadores}}"
+                             th:alt="${j.nomeJogadores}"
+                             loading="lazy"
+                             onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<span>Sem imagem</span>');">
+                    </div>
+                    <div class="carta-info">
+                        <div class="carta-nome" th:text="${j.nomeJogadores}">Nome</div>
+                        <div class="carta-pos" th:text="${j.posicaoJogadores}">POS</div>
+                        <span class="carta-rar" th:text="${j.raridadeJogadores}">COMUM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

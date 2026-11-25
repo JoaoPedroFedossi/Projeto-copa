@@ -1,0 +1,646 @@
+/* Projeto Copa — visual inspirado em c-na.dev
+   Paleta: fundo quase preto, texto creme, navbar cinza clara, acento teal */
+
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #0f0e0d;
+    --bg-elevated: #111111;
+    --ink: #efeae0;
+    --ink-dark: #111111;
+    --muted: #a9a39a;
+    --muted-strong: #4a4744;
+    --nav-bg: #dddddd;
+    --nav-border: #000000;
+    --cream: #f7f4ea;
+    --cream-2: #efeae0;
+    --teal: #5fb8b8;
+    --teal-deep: #007070;
+    --border: rgba(239, 234, 224, 0.12);
+    --border-dark: #000000;
+    --card-shadow: 0 1px 0 rgba(0,0,0,0.4);
+    --font-display: "Silkscreen", "Courier New", monospace;
+    --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html {
+    background: var(--bg);
+    color-scheme: dark;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-body);
+    font-weight: 400;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    padding-top: 48px;
+}
+
+body.auth-page {
+    padding-top: 0;
+}
+
+main, .auth-wrapper { position: relative; z-index: 1; }
+
+/* ===== Navbar fixa estilo c-na (barra clara) ===== */
+.navbar-copa {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--nav-bg) !important;
+    border-bottom: 1px solid var(--nav-border);
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: 40px;
+}
+
+.navbar-copa .container {
+    max-width: 1200px;
+}
+
+.navbar-copa .navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    min-height: 40px;
+    padding: 0.25rem 0;
+}
+
+.navbar-copa .navbar-brand {
+    color: var(--ink-dark) !important;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.navbar-copa .navbar-brand:hover {
+    color: var(--teal-deep) !important;
+}
+
+.nav-tabs-copa {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    flex-wrap: wrap;
+}
+
+.nav-tabs-copa .nav-link-copa {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.7rem;
+    border-radius: 0;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-dark);
+    text-decoration: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+}
+
+.nav-tabs-copa .nav-link-copa:hover {
+    color: var(--ink-dark);
+    border-bottom-color: var(--muted-strong);
+    background: transparent;
+}
+
+.nav-tabs-copa .nav-link-copa.active {
+    color: var(--ink-dark);
+    border-bottom-color: var(--teal);
+    background: transparent;
+    font-weight: 600;
+}
+
+.navbar-copa .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.navbar-copa .text-muted-copa {
+    color: var(--muted-strong) !important;
+    font-size: 0.8rem !important;
+}
+
+/* Badge gemas na navbar clara */
+.navbar-copa .badge-gemas {
+    background: transparent;
+    border: 1px solid var(--ink-dark);
+    color: var(--ink-dark);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.2rem 0.55rem;
+    border-radius: 0;
+}
+
+/* Botão Sair na navbar */
+.navbar-copa .btn-copa {
+    background: transparent;
+    border: 1px solid var(--ink-dark);
+    color: var(--ink-dark);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    border-radius: 0;
+    padding: 0.25rem 0.7rem;
+    box-shadow: none;
+}
+
+.navbar-copa .btn-copa:hover {
+    background: var(--ink-dark);
+    color: var(--cream);
+    border-color: var(--ink-dark);
+    box-shadow: none;
+}
+
+/* ===== Tipografia ===== */
+.title-champ {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+    line-height: 1.15;
+}
+
+.title-gold {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--teal);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.subtitle-mono {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+}
+
+.text-muted-copa {
+    color: var(--muted) !important;
+}
+
+.text-gold {
+    color: var(--teal) !important;
+    font-weight: 600;
+}
+
+/* Status disponível (ponto teal) */
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--teal);
+    margin-right: 0.45rem;
+    vertical-align: middle;
+}
+
+/* ===== Botões ===== */
+.btn-copa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 0;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    box-shadow: none;
+    transition: none;
+    text-decoration: none;
+}
+
+.btn-copa:hover {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+    box-shadow: none;
+}
+
+.btn-copa:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-copa-gold {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: var(--bg);
+    font-weight: 600;
+}
+
+.btn-copa-gold:hover {
+    background: var(--teal-deep);
+    border-color: var(--teal-deep);
+    color: #fff;
+}
+
+.btn-copa-danger {
+    border-color: #c44;
+    color: #f88;
+}
+
+.btn-copa-danger:hover {
+    background: #c44;
+    color: #fff;
+    border-color: #c44;
+}
+
+.btn-outline-garuda {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    background: transparent;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-radius: 0;
+}
+
+.btn-outline-garuda:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+/* ===== Cards ===== */
+.copa-card {
+    background: var(--cream);
+    color: var(--ink-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: 0;
+    box-shadow: none;
+    border-top: 3px solid var(--teal);
+}
+
+.copa-card .title-champ,
+.copa-card .title-gold,
+.copa-card h1,
+.copa-card h2,
+.copa-card h3,
+.copa-card h4,
+.copa-card h5 {
+    color: var(--ink-dark);
+}
+
+.copa-card .title-gold {
+    color: var(--teal-deep);
+}
+
+.copa-card .text-muted-copa {
+    color: var(--muted-strong) !important;
+}
+
+.copa-card .text-gold {
+    color: var(--teal-deep) !important;
+}
+
+.copa-card .btn-copa {
+    border-color: var(--ink-dark);
+    color: var(--ink-dark);
+}
+
+.copa-card .btn-copa:hover {
+    background: var(--ink-dark);
+    color: var(--cream);
+}
+
+.copa-card .btn-copa-gold {
+    background: var(--teal-deep);
+    border-color: var(--teal-deep);
+    color: #fff;
+}
+
+.copa-card .btn-copa-gold:hover {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: var(--bg);
+}
+
+/* ===== Menu cards (home) ===== */
+.menu-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 150px;
+    border-radius: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    text-decoration: none;
+    color: var(--ink-dark) !important;
+    border: 1px solid var(--border-dark);
+    background: var(--cream);
+    transition: none;
+}
+
+.menu-card:hover {
+    box-shadow: none;
+    border-color: var(--teal);
+    color: var(--ink-dark) !important;
+    background: #fff;
+}
+
+.menu-gacha {
+    border-top: 3px solid var(--teal);
+}
+
+.menu-inventario {
+    border-top: 3px solid var(--teal-deep);
+}
+
+/* ===== Auth ===== */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background: var(--bg);
+}
+
+.form-label {
+    color: var(--ink-dark);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+}
+
+.form-control-copa {
+    background: #fff;
+    border: 1px solid var(--ink-dark);
+    border-radius: 0;
+    color: var(--ink-dark);
+    font-family: var(--font-body);
+    padding: 0.55rem 0.75rem;
+}
+
+.form-control-copa:focus {
+    background: #fff;
+    border-color: var(--teal-deep);
+    box-shadow: 0 0 0 2px rgba(0, 112, 112, 0.2);
+    color: var(--ink-dark);
+}
+
+.form-control-copa::placeholder {
+    color: var(--muted);
+}
+
+.link-copa {
+    color: var(--teal-deep);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.link-copa:hover {
+    color: var(--teal);
+}
+
+/* ===== Alertas ===== */
+.alert-copa-erro,
+.alert-copa-sucesso {
+    border-radius: 0;
+    border: 1px solid var(--border-dark);
+    font-size: 0.9rem;
+}
+
+.alert-copa-erro {
+    background: #2a1515;
+    color: #f5c2c2;
+    border-color: #c44;
+}
+
+.alert-copa-sucesso {
+    background: #152a22;
+    color: #b8e0d0;
+    border-color: var(--teal-deep);
+}
+
+/* ===== Badge gemas (fora da nav) ===== */
+.badge-gemas {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 0;
+}
+
+/* ===== Cartas — centralizadas ===== */
+.cartas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.25rem;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-items: center;
+    justify-content: center;
+}
+
+.carta-jogador {
+    background: var(--cream);
+    border: 1px solid var(--border-dark);
+    border-radius: 0;
+    overflow: hidden;
+    opacity: 1;
+    width: 100%;
+    max-width: 180px;
+    transition: none;
+    color: var(--ink-dark);
+}
+
+.carta-jogador:hover {
+    box-shadow: none;
+    border-color: var(--teal);
+}
+
+.carta-jogador.LENDARIO { border-top: 3px solid #e8ab36; }
+.carta-jogador.EPICO { border-top: 3px solid #a855f7; }
+.carta-jogador.RARO { border-top: 3px solid #3b82f6; }
+.carta-jogador.INCOMUM { border-top: 3px solid #22c55e; }
+.carta-jogador.COMUM { border-top: 3px solid #94a3b8; }
+
+.carta-img {
+    aspect-ratio: 3/4;
+    background: #1a1816;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    overflow: hidden;
+}
+
+.carta-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+}
+
+.carta-info {
+    padding: 0.75rem;
+    text-align: center;
+    background: var(--cream);
+}
+
+.carta-nome {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+    color: var(--ink-dark);
+    font-family: var(--font-display);
+}
+
+.carta-pos {
+    font-size: 0.7rem;
+    color: var(--muted-strong);
+    font-family: var(--font-body);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.carta-rar {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 0.65rem;
+    font-family: var(--font-body);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 0;
+    border: 1px solid var(--ink-dark);
+    background: transparent;
+    color: var(--ink-dark);
+}
+
+/* ===== Tabela admin ===== */
+.table-copa {
+    color: var(--ink-dark);
+    --bs-table-bg: transparent;
+    --bs-table-hover-bg: rgba(0,0,0,0.04);
+    margin-bottom: 0;
+}
+
+.table-copa thead th {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted-strong);
+    border-bottom: 1px solid var(--border-dark);
+    background: transparent;
+}
+
+.table-copa td {
+    border-color: rgba(0,0,0,0.08);
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+
+.badge-admin {
+    background: var(--teal-deep);
+    color: #fff;
+}
+
+.badge-user {
+    background: var(--muted-strong);
+    color: #fff;
+}
+
+/* Ícone pacote */
+.icone-pacote {
+    font-size: 2.5rem;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+}
+
+/* Utilitários */
+.container {
+    max-width: 1100px;
+}
+
+/* Forms dentro de cards creme já tratados acima */
+
+
+/* ===== Filtro de raridade (inventário) ===== */
+.filtro-raridade {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filtro-btn {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.filtro-btn:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+}
+
+.filtro-btn.active {
+    color: var(--bg);
+    background: var(--teal);
+    border-color: var(--teal);
+}
+
+.filtro-btn[data-raridade="COMUM"].active { background: #94a3b8; border-color: #94a3b8; color: #111; }
+.filtro-btn[data-raridade="INCOMUM"].active { background: #22c55e; border-color: #22c55e; color: #111; }
+.filtro-btn[data-raridade="RARO"].active { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+.filtro-btn[data-raridade="EPICO"].active { background: #a855f7; border-color: #a855f7; color: #fff; }
+.filtro-btn[data-raridade="LENDARIO"].active { background: #e8ab36; border-color: #e8ab36; color: #111; }
+
+.carta-jogador.filtro-hidden {
+    display: none;
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventário - Projeto Copa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-copa">
+        <div class="container">
+            <div class="navbar-inner w-100">
+                <a class="navbar-brand" th:href="@{/home}">Projeto Copa</a>
+                <div class="nav-tabs-copa">
+                    <a class="nav-link-copa" th:href="@{/home}">Home</a>
+                    <a class="nav-link-copa" th:href="@{/gacha}">Gacha</a>
+                    <a class="nav-link-copa active" th:href="@{/inventario}">Inventário</a>
+                </div>
+                <div class="navbar-right">
+                    <span class="badge-gemas" th:if="${gemas != null}" th:text="${gemas} + ' gemas'">0 gemas</span>
+                    <span class="text-muted-copa d-none d-md-inline" style="font-size:0.8rem;" th:if="${nomeUsuario != null}" th:text="'Olá, ' + ${nomeUsuario}"></span>
+                    <a class="btn btn-copa btn-sm" th:href="@{/logout}">Sair</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <div class="text-center mb-4">
+            <p class="title-gold mb-2">Collection</p>
+            <h2 class="title-champ h3">Seu Inventário</h2>
+            <p class="text-muted-copa" id="inventario-contador"
+               th:if="${jogadores != null and !jogadores.isEmpty()}"
+               th:text="'Você possui ' + ${#lists.size(jogadores)} + ' carta(s)'">0 cartas</p>
+        </div>
+
+        <div th:if="${jogadores == null or jogadores.isEmpty()}"
+             class="copa-card p-4 p-md-5 text-center mx-auto" style="max-width: 560px;">
+            <p class="text-muted-copa mb-0">
+                Ainda não há cartas aqui. Abra pacotes no Gacha para preencher o inventário.
+            </p>
+        </div>
+
+        <div th:if="${jogadores != null and !jogadores.isEmpty()}" class="filtro-raridade mb-4">
+            <button type="button" class="filtro-btn active" data-raridade="TODAS">Todas</button>
+            <button type="button" class="filtro-btn" data-raridade="COMUM">Comum</button>
+            <button type="button" class="filtro-btn" data-raridade="INCOMUM">Incomum</button>
+            <button type="button" class="filtro-btn" data-raridade="RARO">Raro</button>
+            <button type="button" class="filtro-btn" data-raridade="EPICO">Épico</button>
+            <button type="button" class="filtro-btn" data-raridade="LENDARIO">Lendário</button>
+        </div>
+
+        <p id="filtro-vazio" class="text-center text-muted-copa" hidden>
+            Nenhuma carta com essa raridade.
+        </p>
+
+        <div class="cartas-grid" id="cartas-grid" th:if="${jogadores != null and !jogadores.isEmpty()}">
+            <div class="carta-jogador"
+                 th:each="j : ${jogadores}"
+                 th:classappend="${j.raridadeJogadores}"
+                 th:attr="data-raridade=${j.raridadeJogadores}">
+                <div class="carta-img">
+                    <span th:if="${j.imgJogadores == null or #strings.isEmpty(j.imgJogadores)}">Sem imagem</span>
+                    <img th:if="${j.imgJogadores != null and !#strings.isEmpty(j.imgJogadores)}"
+                         th:src="@{${j.imgJogadores}}"
+                         th:alt="${j.nomeJogadores}"
+                         loading="lazy"
+                         onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<span>Sem imagem</span>');">
+                </div>
+                <div class="carta-info">
+                    <div class="carta-nome" th:text="${j.nomeJogadores}">Nome</div>
+                    <div class="carta-pos" th:text="${j.posicaoJogadores}">POS</div>
+                    <span class="carta-rar" th:text="${j.raridadeJogadores}">COMUM</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>
